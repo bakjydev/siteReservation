@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block stylesheets %}
+<style>
+    #calendrier{
+        width: 70%;
+        height: 50em;
+        margin: auto;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+{% if is_granted ('ROLE_ADMIN')%}
+<button>
+<a href="{{ path('app_user_index') }}">Gestion Users</a>
+</button>
+{% endif %}
+{% if app.user %}
+<button>
+<a href="{{ path('app_calendar_new') }}">Nouvelle réservation</a>
+</button>
+  {% else %}
+<button>
+<a href="{{ path('app_login') }}">Me Connecter</a>
+
+</button>
+<button>
+<a href="{{ path('app_register') }}">Inscription</a>
+</button>
+{% endif %}
+<div id="calendrier">
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+   window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'timeGridWeek',
+            locale: 'fr',
+            timezone: 'Europe/Paris',
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek'
+            },
+
+            events: {{data|raw}}
+
+        })
+        calendar.render()
+    }
+</script>
+{% endblock %}

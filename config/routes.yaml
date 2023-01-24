@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+calendar:
+    path: /calendar
+    #la valleur controller prend le format: 'controller_class::method_name'
+    controller: App\Controller\CalendarController::list
+    
